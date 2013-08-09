@@ -13,4 +13,8 @@ class nullmailer::params {
       fail("Unsupported platform: ${::operatingsystem}")
     }
   }
+
+  $idhost = undef
+  $defaulthost = undef
+  $defaultdomain = undef
 }

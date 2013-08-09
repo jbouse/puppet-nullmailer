@@ -19,6 +19,48 @@ class nullmailer::config {
     mode    => '0600',
   }
 
+  if $nullmailer::idhost {
+    file { '/etc/nullmailer/idhost':
+      content => "$nullmailer::idhost\n",
+      require => Class['nullmailer::package'],
+      notify  => Class['nullmailer::service'],
+    }
+  } else {
+    file { '/etc/nullmailer/idhost':
+      ensure  => absent,
+    }
+  }
+
+  if $nullmailer::defaulthost {
+    file { '/etc/nullmailer/defaulthost':
+      content => "$nullmailer::defaulthost\n",
+      require => Class['nullmailer::package'],
+      notify  => Class['nullmailer::service'],
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+    }
+  } else {
+    file { '/etc/nullmailer/defaulthost':
+      ensure  => absent,
+    }
+  }
+
+  if $nullmailer::defaultdomain {
+    file { '/etc/nullmailer/defaultdomain':
+      content => "$nullmailer::defaultdomain\n",
+      require => Class['nullmailer::package'],
+      notify  => Class['nullmailer::service'],
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+    }
+  } else {
+    file { '/etc/nullmailer/defaultdomain':
+      ensure  => absent,
+    }
+  }
+
   if ($nullmailer::adminaddr == '') {
     file { '/etc/nullmailer/adminaddr':
       ensure => absent,
